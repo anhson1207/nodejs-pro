@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 //config routes
 webRoutes(app);
+
+
+
 //config static files (css,js,img)
 app.use(express.static("public"));
 

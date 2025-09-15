@@ -1,4 +1,32 @@
-const handleCreateUser=(fullName:string,email:string,address:string)=>{
-console.log(">>>insert a new user");    
+import { get } from "http";
+import getConnection from "config/db";
+
+const handleCreateUser=async(fullName:string,email:string,address:string)=>{
+    const connection = await getConnection();
+    try {
+        
+  const sql = "INSERT INTO `users`(`name`, `email`,`address`) VALUES (?, ?,?)";
+  const values = [fullName, email, address];
+
+  const [result, fields] = await connection.execute(sql, values);
+  return result;
+    } catch (err) {
+        console.log(err);
+        return [];
+    }
 }
-export {handleCreateUser};
+const getAllUsers=async()=>{
+    const connection=await getConnection();
+        try {
+            const [results, fields] = await connection.query(
+                "SELECT * FROM `users` "
+            );
+
+        return results;
+        } catch (err) {
+            console.log(err);
+            return [];
+        }
+    
+}
+export {handleCreateUser,getAllUsers};
